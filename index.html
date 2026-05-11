@@ -173,6 +173,23 @@
     font-size: 2.5rem; margin-bottom: 1rem;
     display: block; line-height: 1;
   }
+  
+  /* ESTILO PARA ICONO PERSONALIZADO CON IMAGEN MÁSCARA */
+  .svc-img-mask {
+    width: 48px; height: 48px;
+    background-color: var(--neon);
+    -webkit-mask-image: url('image_1.png');
+    mask-image: url('image_1.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: left center;
+    mask-position: left center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    margin-bottom: 1rem;
+    transition: background-color 0.25s;
+  }
+
   .service-card h3 {
     font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
@@ -328,7 +345,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">🐐 Chivo<span>Maker</span></div>
   <div class="nav-links">
@@ -339,7 +355,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
@@ -379,7 +394,6 @@
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="section" id="servicios">
   <div class="section-label fade-in">Servicios</div>
   <h2 class="fade-in">Lo que <em>fabricamos</em></h2>
@@ -410,7 +424,7 @@
     </div>
     <div class="service-card fade-in">
       <div class="svc-num">03</div>
-      <span class="svc-icon">🖨️</span>
+      <div class="svc-img-mask"></div>
       <h3>Impresión 3D</h3>
       <p>Prototipos, piezas de repuesto, accesorios, juguetes y objetos únicos en PLA, PETG y otros materiales.</p>
       <div class="svc-tags">
@@ -423,7 +437,6 @@
   </div>
 </section>
 
-<!-- PORTFOLIO -->
 <section class="section portfolio-section" id="trabajos">
   <div class="section-label fade-in">Portfolio</div>
   <h2 class="fade-in">Algunos <em>trabajos</em></h2>
@@ -454,7 +467,6 @@
   </p>
 </section>
 
-<!-- PROCESS -->
 <section class="section">
   <div class="section-label fade-in">Cómo funciona</div>
   <h2 class="fade-in">Simple <em>y rápido</em></h2>
@@ -482,7 +494,6 @@
   </div>
 </section>
 
-<!-- WHY US -->
 <section class="section" style="padding-top:0;">
   <div class="section-label fade-in">Por qué elegirnos</div>
   <h2 class="fade-in">Lo que nos <em>diferencia</em></h2>
@@ -510,7 +521,6 @@
   </div>
 </section>
 
-<!-- QUOTE FORM -->
 <section class="quote-section" id="cotizar">
   <div class="section-label">Cotizá</div>
   <h2>¿Qué tenés <em>en mente?</em></h2>
@@ -543,7 +553,6 @@
   </form>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="logo" style="font-size:1.1rem;">🐐 Chivo<span style="color:var(--neon);">Maker</span></div>
   <p>Malargüe, Mendoza · Envíos a todo el país</p>
