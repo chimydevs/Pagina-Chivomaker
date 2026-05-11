@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chivo Maker – Fabricación Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a08;
+    --white: #f5f2ea;
+    --cream: #ede9df;
+    --neon: #b8ff57;
+    --neon-dim: #8fcc2e;
+    --accent: #ff5c1a;
+    --mid: #2a2a24;
+    --muted: #6b6b60;
+    --border: rgba(245,242,234,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .logo { font-family: 'Syne', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--white);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .logo span { color: var(--neon); }
+  nav a {
+    color: rgba(245,242,234,0.6); text-decoration: none;
+    font-size: 0.9rem; transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+  nav .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .btn-nav {
+    background: var(--neon); color: var(--black) !important;
+    font-weight: 700; font-family: 'Syne', sans-serif;
+    padding: 0.55rem 1.3rem; border-radius: 2rem;
+    font-size: 0.85rem; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none !important;
+  }
+  .btn-nav:hover { background: #cfff80; transform: scale(1.04); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 5vw 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(184,255,87,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,255,87,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    position: absolute; top: -10%; right: -5%;
+    width: 55vw; height: 55vw; max-width: 700px; max-height: 700px;
+    background: radial-gradient(circle, rgba(184,255,87,0.1) 0%, transparent 65%);
+    z-index: 0; pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 820px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(184,255,87,0.1); border: 1px solid rgba(184,255,87,0.3);
+    color: var(--neon); font-size: 0.8rem; font-weight: 500;
+    padding: 0.4rem 1rem; border-radius: 2rem; margin-bottom: 1.8rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--neon); animation: blink 1.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800; line-height: 0.95;
+    letter-spacing: -0.04em; margin-bottom: 1.5rem;
+  }
+  h1 .line2 { color: var(--neon); display: block; }
+  h1 .line3 { color: rgba(245,242,234,0.35); font-weight: 400; display: block; }
+
+  .hero-sub {
+    font-size: 1.15rem; color: rgba(245,242,234,0.55);
+    max-width: 480px; margin-bottom: 2.5rem; font-weight: 300;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--neon); color: var(--black);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    padding: 0.85rem 2rem; border-radius: 2rem; text-decoration: none;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-primary:hover { background: #cfff80; transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(245,242,234,0.25);
+    font-family: 'Syne', sans-serif; font-weight: 500; font-size: 1rem;
+    padding: 0.85rem 2rem; border-radius: 2rem; text-decoration: none;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-secondary:hover { border-color: var(--white); background: rgba(245,242,234,0.06); }
+
+  .hero-stats {
+    margin-top: 4rem; display: flex; gap: 3rem; flex-wrap: wrap;
+    padding-top: 2.5rem; border-top: 1px solid var(--border);
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--white); }
+  .stat-num span { color: var(--neon); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem; }
+
+  /* ── SERVICES ── */
+  .section { padding: 6rem 5vw; }
+  .section-label {
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--neon); font-weight: 500; margin-bottom: 1rem;
+  }
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.05; margin-bottom: 3.5rem;
+  }
+  h2 em { font-style: normal; color: rgba(245,242,234,0.3); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: background 0.25s;
+  }
+  .service-card:hover { background: var(--mid); }
+  .service-card:hover .svc-num { color: var(--neon); }
+  .svc-num {
+    font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 1.5rem; transition: color 0.25s;
+  }
+  .svc-icon {
+    font-size: 2.5rem; margin-bottom: 1rem;
+    display: block; line-height: 1;
+  }
+  .service-card h3 {
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .service-card p { font-size: 0.9rem; color: rgba(245,242,234,0.5); line-height: 1.6; }
+  .svc-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .svc-tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+    background: rgba(184,255,87,0.08); color: var(--neon-dim);
+    border: 1px solid rgba(184,255,87,0.2);
+    padding: 0.25rem 0.7rem; border-radius: 1rem;
+  }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-section { background: var(--mid); }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .portfolio-item {
+    aspect-ratio: 4/3;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem; cursor: pointer;
+    overflow: hidden; position: relative;
+    transition: border-color 0.25s;
+  }
+  .portfolio-item:hover { border-color: rgba(184,255,87,0.4); }
+  .portfolio-item:hover .pi-label { background: var(--neon); color: var(--black); }
+  .pi-emoji { font-size: 3rem; }
+  .pi-label {
+    font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border: 1px solid rgba(184,255,87,0.3);
+    color: var(--neon); border-radius: 1rem;
+    transition: all 0.25s;
+  }
+  .pi-desc { font-size: 0.8rem; color: var(--muted); text-align: center; padding: 0 1rem; }
+
+  /* ── PROCESS ── */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .process-step {
+    padding: 2rem;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+  .process-step:first-child { border-left: none; }
+  .step-num {
+    font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800;
+    color: rgba(184,255,87,0.12); line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .process-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .process-step p { font-size: 0.85rem; color: var(--muted); }
+
+  /* ── QUOTE FORM ── */
+  .quote-section {
+    background: var(--neon);
+    padding: 5rem 5vw;
+    color: var(--black);
+  }
+  .quote-section .section-label { color: rgba(10,10,8,0.5); }
+  .quote-section h2 { color: var(--black); margin-bottom: 0.75rem; }
+  .quote-section h2 em { color: rgba(10,10,8,0.3); }
+  .quote-sub { font-size: 1rem; color: rgba(10,10,8,0.6); margin-bottom: 2.5rem; }
+
+  .quote-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem; max-width: 680px;
+  }
+  .form-full { grid-column: 1 / -1; }
+  .quote-form input, .quote-form select, .quote-form textarea {
+    width: 100%;
+    background: rgba(10,10,8,0.08);
+    border: 1.5px solid rgba(10,10,8,0.2);
+    color: var(--black); font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; padding: 0.85rem 1rem;
+    border-radius: 6px; outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .quote-form input::placeholder,
+  .quote-form textarea::placeholder { color: rgba(10,10,8,0.35); }
+  .quote-form input:focus, .quote-form select:focus, .quote-form textarea:focus {
+    border-color: rgba(10,10,8,0.6);
+  }
+  .quote-form select option { background: var(--black); color: var(--white); }
+  .quote-form textarea { resize: vertical; min-height: 110px; }
+  .btn-wa {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--black); color: var(--neon);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    padding: 1rem 2rem; border-radius: 2rem; text-decoration: none;
+    border: none; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-wa:hover { background: var(--mid); transform: translateY(-2px); }
+  .wa-icon { font-size: 1.2rem; }
+
+  /* ── WHY US ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .why-card {
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .why-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .why-card p { font-size: 0.85rem; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.85rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    nav .nav-links { gap: 1rem; }
+    nav a:not(.btn-nav) { display: none; }
+    .quote-form { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { border-left: none; border-top: 1px solid var(--border); }
+    .process-step:first-child { border-top: none; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🐐 Chivo<span>Maker</span></div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#trabajos">Trabajos</a>
+    <a href="#cotizar">Cotizar</a>
+    <a href="#cotizar" class="btn-nav">Cotizá ahora</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-badge">Malargüe, Mendoza · Envíos a todo el país</div>
+    <h1>
+      Tu idea
+      <span class="line2">hecha realidad.</span>
+      <span class="line3">Fabricación digital.</span>
+    </h1>
+    <p class="hero-sub">
+      Cartelería neón flex, corte y grabado láser CNC, impresión 3D.
+      Hacemos lo que imaginás, desde Malargüe para toda Argentina.
+    </p>
+    <div class="hero-ctas">
+      <a href="#cotizar" class="btn-primary">
+        <span>📲</span> Cotizá tu proyecto
+      </a>
+      <a href="#servicios" class="btn-secondary">
+        Ver servicios ↓
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Tecnologías</div>
+      </div>
+      <div>
+        <div class="stat-num">AR<span>+</span></div>
+        <div class="stat-label">Envíos a todo el país</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Posibilidades</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="servicios">
+  <div class="section-label fade-in">Servicios</div>
+  <h2 class="fade-in">Lo que <em>fabricamos</em></h2>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="svc-num">01</div>
+      <span class="svc-icon">💡</span>
+      <h3>Cartelería Neón Flex</h3>
+      <p>Letreros y carteles luminosos de neón flexible para locales, eventos, decoración y regalos personalizados.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Personalizados</span>
+        <span class="svc-tag">Interiores</span>
+        <span class="svc-tag">Regalos</span>
+        <span class="svc-tag">Locales comerciales</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-num">02</div>
+      <span class="svc-icon">⚡</span>
+      <h3>Corte y Grabado Láser CNC</h3>
+      <p>Grabado y corte de precisión en madera, acrílico, cuero, MDF y más. Logos, diseños, trofeos, placas.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Madera</span>
+        <span class="svc-tag">Acrílico</span>
+        <span class="svc-tag">MDF</span>
+        <span class="svc-tag">Cuero</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-num">03</div>
+      <span class="svc-icon">🖨️</span>
+      <h3>Impresión 3D</h3>
+      <p>Prototipos, piezas de repuesto, accesorios, juguetes y objetos únicos en PLA, PETG y otros materiales.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">PLA</span>
+        <span class="svc-tag">PETG</span>
+        <span class="svc-tag">Prototipos</span>
+        <span class="svc-tag">Piezas a medida</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section portfolio-section" id="trabajos">
+  <div class="section-label fade-in">Portfolio</div>
+  <h2 class="fade-in">Algunos <em>trabajos</em></h2>
+  <div class="portfolio-grid">
+    <div class="portfolio-item fade-in">
+      <div class="pi-emoji">💡</div>
+      <div class="pi-label">Neón Flex</div>
+      <div class="pi-desc">Carteles luminosos para locales y eventos</div>
+    </div>
+    <div class="portfolio-item fade-in">
+      <div class="pi-emoji">🏆</div>
+      <div class="pi-label">Trofeos Láser</div>
+      <div class="pi-desc">Trofeos y placas grabadas en madera y acrílico</div>
+    </div>
+    <div class="portfolio-item fade-in">
+      <div class="pi-emoji">🔩</div>
+      <div class="pi-label">Piezas 3D</div>
+      <div class="pi-desc">Repuestos y piezas personalizadas en PLA</div>
+    </div>
+    <div class="portfolio-item fade-in">
+      <div class="pi-emoji">✂️</div>
+      <div class="pi-label">Corte CNC</div>
+      <div class="pi-desc">Diseños vectoriales cortados en MDF y madera</div>
+    </div>
+  </div>
+  <p style="margin-top:1.5rem; font-size:0.9rem; color:var(--muted);">
+    Seguinos en Instagram <a href="https://instagram.com/chivo_maker" target="_blank" style="color:var(--neon); text-decoration:none; font-weight:500;">@chivo_maker</a> para ver más trabajos →
+  </p>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="section-label fade-in">Cómo funciona</div>
+  <h2 class="fade-in">Simple <em>y rápido</em></h2>
+  <div class="process-steps">
+    <div class="process-step fade-in">
+      <div class="step-num">01</div>
+      <h3>Contanos tu idea</h3>
+      <p>Mandanos el diseño, la idea o una foto de referencia por WhatsApp.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">02</div>
+      <h3>Recibís la cotización</h3>
+      <p>Te enviamos precio, materiales y tiempo estimado de producción.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">03</div>
+      <h3>Fabricamos</h3>
+      <p>Ponemos manos a la obra con atención al detalle en cada paso.</p>
+    </div>
+    <div class="process-step fade-in">
+      <div class="step-num">04</div>
+      <h3>Entregamos</h3>
+      <p>Retiro en Malargüe o envío a cualquier punto del país.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" style="padding-top:0;">
+  <div class="section-label fade-in">Por qué elegirnos</div>
+  <h2 class="fade-in">Lo que nos <em>diferencia</em></h2>
+  <div class="why-grid">
+    <div class="why-card fade-in">
+      <div class="why-icon">🤝</div>
+      <h3>Trato personal</h3>
+      <p>Trabajás directamente con los hacedores, sin intermediarios.</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">⚡</div>
+      <h3>Respuesta rápida</h3>
+      <p>Cotización en el día. Tiempos de entrega ágiles.</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">🎯</div>
+      <h3>Calidad garantizada</h3>
+      <p>Cada pieza fabricada con control de calidad antes de entregar.</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">🚚</div>
+      <h3>Envíos a todo el país</h3>
+      <p>Desde Malargüe, Mendoza, a cualquier provincia de Argentina.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FORM -->
+<section class="quote-section" id="cotizar">
+  <div class="section-label">Cotizá</div>
+  <h2>¿Qué tenés <em>en mente?</em></h2>
+  <p class="quote-sub">Completá el formulario y te respondemos por WhatsApp.</p>
+  <form class="quote-form" id="quoteForm">
+    <div>
+      <input type="text" placeholder="Tu nombre" id="nombre" required>
+    </div>
+    <div>
+      <input type="tel" placeholder="Tu WhatsApp (ej: 2604123456)" id="telefono" required>
+    </div>
+    <div class="form-full">
+      <select id="servicio">
+        <option value="" disabled selected>¿Qué servicio te interesa?</option>
+        <option>Cartelería Neón Flex</option>
+        <option>Corte y Grabado Láser CNC</option>
+        <option>Impresión 3D</option>
+        <option>Varios servicios</option>
+      </select>
+    </div>
+    <div class="form-full">
+      <textarea id="detalle" placeholder="Describí tu proyecto: medidas, materiales, colores, cantidad, para qué es... Cuanto más detalle mejor 👌"></textarea>
+    </div>
+    <div class="form-full">
+      <button type="submit" class="btn-wa">
+        <span class="wa-icon">📲</span>
+        Enviar por WhatsApp
+      </button>
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo" style="font-size:1.1rem;">🐐 Chivo<span style="color:var(--neon);">Maker</span></div>
+  <p>Malargüe, Mendoza · Envíos a todo el país</p>
+  <div class="footer-links">
+    <a href="https://instagram.com/chivo_maker" target="_blank">Instagram</a>
+    <a href="https://wa.link/787lao" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.getElementById('quoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const servicio = document.getElementById('servicio').value || 'Sin especificar';
+    const detalle = document.getElementById('detalle').value.trim();
+    if (!nombre || !telefono) return;
+    const msg = encodeURIComponent(
+      `¡Hola! Me contacto desde la web de Chivo Maker.\n\n` +
+      `👤 *Nombre:* ${nombre}\n` +
+      `📱 *Teléfono:* ${telefono}\n` +
+      `🔧 *Servicio:* ${servicio}\n` +
+      `📝 *Proyecto:* ${detalle || 'Sin detalle adicional'}`
+    );
+    window.open(`https://wa.me/5492604787lao?text=${msg}`, '_blank');
+  });
+</script>
+</body>
+</html>
